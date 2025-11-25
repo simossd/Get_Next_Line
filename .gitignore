@@ -1,0 +1,19 @@
+# Compiled binaries
+*.o
+*.out
+a.out
+
+# Test files
+test.txt
+main_test.c
+gnl_test
+gnl_test_*
+
+# CodeQL
+_codeql_detected_source_root
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
