@@ -35,7 +35,7 @@ static char	*extract_line(char *stash)
 		len++;
 	if (stash[len] == '\n')
 		len++;
-	line = (char *)malloc(sizeof(char) * (len + 1));
+	line = (char *)malloc(len + 1);
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -65,7 +65,7 @@ static char	*update_stash(char *stash)
 		return (NULL);
 	}
 	i++;
-	new_stash = (char *)malloc(sizeof(char) * (ft_strlen(stash) - i + 1));
+	new_stash = (char *)malloc(ft_strlen(stash) - i + 1);
 	if (!new_stash)
 	{
 		free(stash);
@@ -85,7 +85,7 @@ static char	*read_and_stash(int fd, char *stash)
 	char	*temp;
 	ssize_t	bytes_read;
 
-	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	buffer = (char *)malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (ft_free_and_null(&stash));
 	bytes_read = 1;

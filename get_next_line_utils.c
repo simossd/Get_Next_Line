@@ -48,7 +48,7 @@ char	*ft_strdup(const char *s1)
 	if (!s1)
 		return (NULL);
 	len = ft_strlen(s1);
-	dup = (char *)malloc(sizeof(char) * (len + 1));
+	dup = (char *)malloc(len + 1);
 	if (!dup)
 		return (NULL);
 	i = 0;
@@ -76,7 +76,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (ft_strdup(s1));
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
-	result = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
+	result = (char *)malloc(len1 + len2 + 1);
 	if (!result)
 		return (NULL);
 	i = 0;
