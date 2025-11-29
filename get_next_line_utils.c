@@ -6,84 +6,90 @@
 /*   By: mjabri <mjabri@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 07:51:26 by mjabri            #+#    #+#             */
-/*   Updated: 2025/11/25 13:55:17 by mjabri           ###   ########.fr       */
+/*   Updated: 2025/11/29 10:14:07 by mjabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strnlen(char *str)
+void *ft_calloc(size_t nmemb)
 {
-	int	i;
+    size_t i;
+    char *str;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+    str = malloc(nmemb);
+    if (!str)
+        return (NULL);
+    i = 0;
+    while (i < nmemb)
+        str[i++] = 0;
+    return (str);
 }
 
-char	*ft_strnjoin(char *str1, char *str2)
+int ft_strnlen(char *str)
 {
-	int		i;
-	int		i2;
-	int		i3;
-	char	*temp;
+    int i;
 
-	if (!str1 || !str2)
-		return (NULL);
-	temp = malloc(ft_strnlen(str1) + ft_strnlen(str2) + 1);
-	if (!temp)
-		return (NULL);
-	i = 0;
-	i2 = 0;
-	i3 = 0;
-	while (str1[i2])
-		temp[i++] = str1[i2++];
-	while (str2[i3])
-		temp[i++] = str2[i3++];
-	temp[i] = '\0';
-	return (temp);
+    i = 0;
+    while (str[i])
+        i++;
+    return (i);
 }
 
-char	*ft_strdup(char *str)
+int new_line_search(char *str)
 {
-	int		i;
-	char	*dup;
+    int i;
 
-	dup = malloc(ft_strnlen(str) + 1);
-	if (!dup)
-		return (NULL);
-	i = 0;
-	while (str[i])
+    i = 0;
+    while (str[i])
 	{
-		dup[i] = str[i];
+		if (str[i] =='\n')
+			return 1;
 		i++;
 	}
-	dup[i++] = '\0';
-	return (dup);
+	return 0;
 }
 
-char	*n_line_check(char *str, char *to_next, ssize_t index)
+char *ft_strnjoin(char *src1, char *src2)
 {
-	int		checker;
-	char	*line;
-	int		big_line;
-	int next_return;
-	
-	big_line = ft_strnlen(str);
-	line = malloc(big_line - index + 2);
-	checker = 0;
-	next_return = 0;
-	while (str[checker] && str[checker] != '\n')
-	{
-		line[checker] = str[checker];
-		checker++;
-	}
-	line[checker++] = '\n';
-	line[checker] = '\0';
-	while (checker < big_line)
-		to_next[next_return++] = str[checker++];
-	to_next[next_return] = '\0';
-	free(str);
-	return (line); 
+    char *str;
+    int s1;
+    int s2;
+    int i;
+
+    if (!src1 || !src2)
+        return (NULL);
+    str = ft_calloc(ft_strnlen(src1) + ft_strnlen(src2) + 1);
+    if (!str)
+        return (NULL);
+    i = 0;
+    s1 = 0;
+    s2 = 0;
+    while (src1[s1])
+        str[i++] = src1[s1++];
+    while (src2[s2])
+        str[i++] = src2[s2++];
+    str[i] = '\0';
+    return (str);
+}
+
+char *ft_line(char *str)
+{
+    int i;
+    char *line;
+    int index;
+
+    i = 0;
+    index = 0;
+    while (str[i] && str[i] != '\n')
+        i++;
+    line = ft_calloc(ft_strnlen(str) - i + 1);
+    if (!line || (str[i] == '\0'))
+        return (NULL);
+    i++;
+    while (str[i])
+        line[index++] = str[i++];
+    line[index] = '\0';
+    free(str);
+    return (line);
 }

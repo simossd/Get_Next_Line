@@ -6,7 +6,7 @@
 /*   By: mjabri <mjabri@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 05:50:04 by mjabri            #+#    #+#             */
-/*   Updated: 2025/11/25 13:59:48 by mjabri           ###   ########.fr       */
+/*   Updated: 2025/11/29 10:04:09 by mjabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,18 @@
 # define GNL
 
 # include <fcntl.h>
-# include <stdio.h> // test
 # include <stdlib.h>
 # include <unistd.h>
 
-# define BUFFER_SIZE 100000
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 5
+#endif
 
-int		ft_strnlen(char *str);
-char	*ft_strnjoin(char *str1, char *str2);
-char	*ft_strdup(char *str);
-char	*n_line_check(char *str, char *to_next, ssize_t index);
+void *ft_calloc(size_t nmemb);
+int ft_strnlen(char *str);
+int new_line_search(char *str);
+char *ft_strnjoin(char *src1, char *src2);
+char *ft_line(char *str);
+char    *get_next_line(int fd);
 
 #endif
