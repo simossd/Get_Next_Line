@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mjabri <mjabri@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/21 07:51:26 by mjabri            #+#    #+#             */
-/*   Updated: 2025/11/30 15:24:41 by mjabri           ###   ########.fr       */
+/*   Created: 2025/11/30 13:20:42 by mjabri            #+#    #+#             */
+/*   Updated: 2025/11/30 13:32:48 by mjabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
-void *ft_calloc(size_t nmemb)
+void *ft_calloc_bns(size_t nmemb)
 {
     size_t i;
     char *str;
@@ -26,7 +26,7 @@ void *ft_calloc(size_t nmemb)
     return (str);
 }
 
-int ft_strnlen(char *str)
+int ft_strnlen_bns(char *str)
 {
     int i;
 
@@ -36,7 +36,7 @@ int ft_strnlen(char *str)
     return (i);
 }
 
-int new_line_search(char *str)
+int new_line_search_bns(char *str)
 {
     int i;
 
@@ -50,7 +50,7 @@ int new_line_search(char *str)
 	return 0;
 }
 
-char *ft_strnjoin(char *src1, char *src2)
+char *ft_strnjoin_bns(char *src1, char *src2)
 {
     char *str;
     int s1;
@@ -59,7 +59,7 @@ char *ft_strnjoin(char *src1, char *src2)
 
     if (!src1 || !src2)
         return (NULL);
-    str = ft_calloc(ft_strnlen(src1) + ft_strnlen(src2) + 1);
+    str = ft_calloc_bns(ft_strnlen_bns(src1) + ft_strnlen_bns(src2) + 1);
     if (!str)
         return (NULL);
     i = 0;
@@ -73,7 +73,7 @@ char *ft_strnjoin(char *src1, char *src2)
     return (str);
 }
 
-char *ft_line(char *str, char *freed)
+char *ft_line_bns(char *str)
 {
     int i;
     char *line;
@@ -83,7 +83,7 @@ char *ft_line(char *str, char *freed)
     index = 0;
     while (str[i] && str[i] != '\n')
         i++;
-    line = ft_calloc(ft_strnlen(str) - i + 1);
+    line = ft_calloc_bns(ft_strnlen_bns(str) - i + 1);
     if (!line || (str[i] == '\0'))
         return (NULL);
     i++;
@@ -91,6 +91,5 @@ char *ft_line(char *str, char *freed)
         line[index++] = str[i++];
     line[index] = '\0';
     free(str);
-	// free(freed);
     return (line);
 }
