@@ -6,115 +6,80 @@
 /*   By: mjabri <mjabri@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 10:57:35 by mjabri            #+#    #+#             */
-/*   Updated: 2025/11/30 15:32:34 by mjabri           ###   ########.fr       */
+/*   Updated: 2025/12/01 09:16:05 by mjabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char *gnl(char *src)
+char	*gnl(char *src)
 {
-    int i;
-    char *str;
+	int		i;
+	char	*str;
 
-    i = 0;
-    while (src[i] && src[i] != '\n')
-        i++;
-    str = ft_calloc(i + 2);
-    if (!str)
-        return (NULL);
-    i = 0;
-    while (src[i] && src[i] != '\n')
-    {
-        str[i] = src[i];
-        i++;
-    }
-    if (src[i] == '\n')
-    {
-        str[i++] = '\n';
-    }
-    str[i] = '\0';
-    return (str);
+	i = 0;
+	while (src[i] && src[i] != '\n')
+		i++;
+	str = ft_calloc(i + 2);
+	if (!str)
+		return (free(src), NULL);
+	i = 0;
+	while (src[i] && src[i] != '\n')
+	{
+		str[i] = src[i];
+		i++;
+	}
+	if (src[i] == '\n')
+	{
+		str[i++] = '\n';
+	}
+	str[i] = '\0';
+	return (str);
 }
 
-char *ft_rread(char *str, int fd)
+char	*ft_rread(char *str, int fd)
 {
-    char *buffer;
-    int i;
+	char	*buffer;
+	int		i;
 
-    if (!str)
-        str = ft_calloc(1);
-    buffer = ft_calloc(BUFFER_SIZE + 1);
-    if (!buffer)
-        return (NULL);
-    i = 1;
-    while (i > 0)
-    {
-        i = read(fd, buffer, BUFFER_SIZE);
-        if (i == -1)
-            return (NULL);
-		buffer[i] = '\0';
-        str = ft_strnjoin(str, buffer);
-        if (!str)
-            return (NULL);
-        if (new_line_search(buffer) == 1)
-            break;
-    }
-    free(buffer);
-	if (str[0] == '\0')
+	if (!str)
+		str = ft_calloc(1);
+	if (!str)
 		return (NULL);
-    return (str);
+	buffer = ft_calloc(BUFFER_SIZE + 1);
+	if (!buffer)
+		return (free(str), NULL);
+	i = 1;
+	while ((new_line_search(buffer) != 1) && i > 0)
+	{
+		i = read(fd, buffer, BUFFER_SIZE);
+		if (i == -1)
+			return (free(str),free(buffer), NULL);
+		buffer[i] = '\0';
+		str = ft_strnjoin(str, buffer);
+		if (!str)
+			return (free(buffer), NULL);
+	}
+	if (str[0] == '\0')
+		return (free(str), free(buffer), NULL);
+	return (free(buffer), str);
 }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-    static char *folder;
-    char *str;
+	static char	*folder;
+	char		*str;
 
-    if (fd < 0 || BUFFER_SIZE <= 0)
-        return (NULL);
-    folder = ft_rread(folder, fd);
-    if (!folder)
-        return (NULL);
-    str = gnl(folder);
-    folder = ft_line(folder, str);
-	// if (str[0] = '\0')
-	// 	free(folder);
-    return (str);
-}
-
-#include <stdio.h>
-
-int main(void)
-{
-    int  fd;
-    char *line;
-
-    printf("===== TEST 1: normal file =====\n");
-    fd = open("file.txt", O_RDONLY);
-    while ((line = get_next_line(fd)))
-    {
-        printf("%s", line);
-        free(line);
-    }
-    close(fd);
-
-    printf("\n===== TEST 2: empty file =====\n");
-    fd = open("empty.txt", O_RDONLY);
-    while ((line = get_next_line(fd)))
-    {
-        printf("%s", line);
-        free(line);
-    }
-    close(fd);
-
-    printf("\n===== TEST 3: no newline at end =====\n");
-    fd = open("nonewline.txt", O_RDONLY);
-    while ((line = get_next_line(fd)))
-    {
-        printf("%s", line);
-        free(line);
-    }
-    close(fd);
-    return (0);
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	folder = ft_rread(folder, fd);
+	if (!folder)
+		return (NULL);
+	str = gnl(folder);
+	if (!str)
+		return (free(folder), NULL);
+	folder = ft_line(folder);
+	if (!folder)
+		return (free(str), NULL);
+	return (str);
 }

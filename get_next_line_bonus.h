@@ -5,27 +5,27 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mjabri <mjabri@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/30 13:20:41 by mjabri            #+#    #+#             */
-/*   Updated: 2025/11/30 13:51:29 by mjabri           ###   ########.fr       */
+/*   Created: 2025/12/01 08:50:20 by mjabri            #+#    #+#             */
+/*   Updated: 2025/12/01 09:02:39 by mjabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GNL_BNS
-# define GNL_BNS
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 100000
-#endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
 
-void *ft_calloc_bns(size_t nmemb);
-int ft_strnlen_bns(char *str);
-int new_line_search_bns(char *str);
-char *ft_strnjoin_bns(char *src1, char *src2);
-char *ft_line_bns(char *str);
-char    *get_next_line_bonus(int fd);
+void	*ft_calloc(size_t nmemb);
+int		ft_strnlen(char *str);
+int		new_line_search(char *str);
+char	*ft_strnjoin(char *src1, char *src2);
+char	*ft_line(char *str);
+char	*get_next_line(int fd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mjabri <mjabri@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 07:51:26 by mjabri            #+#    #+#             */
-/*   Updated: 2025/11/30 15:24:41 by mjabri           ###   ########.fr       */
+/*   Updated: 2025/12/01 09:21:22 by mjabri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,9 @@ char *ft_strnjoin(char *src1, char *src2)
     int s2;
     int i;
 
-    if (!src1 || !src2)
-        return (NULL);
     str = ft_calloc(ft_strnlen(src1) + ft_strnlen(src2) + 1);
     if (!str)
-        return (NULL);
+        return (free(src1), free(src2), NULL);
     i = 0;
     s1 = 0;
     s2 = 0;
@@ -70,10 +68,10 @@ char *ft_strnjoin(char *src1, char *src2)
     while (src2[s2])
         str[i++] = src2[s2++];
     str[i] = '\0';
-    return (str);
+    return (free(src1), str);
 }
 
-char *ft_line(char *str, char *freed)
+char *ft_line(char *str)
 {
     int i;
     char *line;
@@ -84,13 +82,15 @@ char *ft_line(char *str, char *freed)
     while (str[i] && str[i] != '\n')
         i++;
     line = ft_calloc(ft_strnlen(str) - i + 1);
-    if (!line || (str[i] == '\0'))
-        return (NULL);
+    if (!line)
+	{
+        return (free(str), NULL);
+	}
+	if (str[i] == '\0')
+		return (free(line), free(str), NULL);
     i++;
     while (str[i])
         line[index++] = str[i++];
     line[index] = '\0';
-    free(str);
-	// free(freed);
-    return (line);
+    return (free(str), line);
 }
